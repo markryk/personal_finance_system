@@ -2,7 +2,10 @@
 Sistema pessoal de finanças
 
 ## Tecnologias utilizadas
-
+- Laravel 13
+- MySQl
+- Vue.js
+- Chart.js
 
 ## Como rodar o projeto
 ```

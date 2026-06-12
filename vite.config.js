@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import tailwindcss from '@tailwindcss/vite';
@@ -15,6 +16,7 @@ export default defineConfig({
             ],
         }),
         tailwindcss(),
+        vue()
     ],
     server: {
         watch: {
