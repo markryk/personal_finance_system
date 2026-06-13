@@ -6,31 +6,16 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label> Descrição </label>
-            <input type="text" name="description" value="{{ $expense->description }}" class="form-control">
-        </div>
+        <x-input name="description" label="Descrição" value="{{ $expense->description }}"/>
+        <x-input name="amount" label="Valor" type="number" step="0.01" value="{{ $expense->amount }}"/>
+        <x-input name="date" label="Data" type="date" value="{{ $expense->date->format('Y-m-d') }}"/>
 
-        <div class="mb-3">
-            <label> Valor </label>
-            <input type="number" step="0.01" name="amount" value="{{ $expense->amount }}" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label>Data</label>
-            <input type="date" name="date" value="{{ $expense->date }}" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label> Categoria </label>
-            <select name="category_id" class="form-control">
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" @selected($expense->category_id == $category->id)>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        <x-select 
+            name="category_id"
+            label="Categoria"
+            :options="$categories->pluck('name','id')->toArray()"
+            :selected="$expense->category_id"
+        />
 
         <button class="btn btn-success"> Atualizar </button>
     </form>

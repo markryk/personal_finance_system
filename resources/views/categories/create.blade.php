@@ -6,23 +6,9 @@
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <label> Nome </label>
-            <input type="text" name="name" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label> Tipo </label>
-            <select name="type" class="form-control">
-                <option value="income"> Receita </option>
-                <option value="expense"> Despesa </option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label> Cor </label>
-            <input type="color" name="color" class="form-control form-control-color">
-        </div>
+        <x-input name="name" label="Nome" class="form-control"/>
+        <x-select name="type" label="Tipo" :options="['income'=>'Receita', 'expense'=>'Despesa']"/>
+        <x-input type="color" name="color" label="Cor" class="form-control-color"/>
 
         <button class="btn btn-success"> Salvar </button>
     </form>

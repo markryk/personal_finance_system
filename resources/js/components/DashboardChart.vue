@@ -1,30 +1,21 @@
 <template>
-    <canvas ref="chart"></canvas>
+    <BaseChart type="bar" :data="chartData"/>
 </template>
 
 <script setup>
-    import { ref, onMounted } from 'vue';
-    import Chart from 'chart.js/auto';
-
-    const chart = ref(null);
+    import BaseChart from './BaseChart.vue';
 
     const props = defineProps({
         labels: Array,
         values: Array
     });
 
-    onMounted(() => {
-        new Chart(chart.value, {
-                type: 'bar',
-                data: {
-                    labels: props.labels,
+    const chartData = {
 
-                    datasets: [{
-                        label: 'Valores',
-                        data: props.values
-                    }]
-                }
-            }
-        );
-    });
+        labels: props.labels,
+        datasets: [{
+            label: 'Valores',
+            data: props.values
+        }]
+    };
 </script>

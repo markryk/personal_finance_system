@@ -12,6 +12,18 @@ class IncomeController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        /*$query = Income::query();
+
+        if ($request->start_date) {
+            $query->whereDate('date', '>=', $request->start_date);
+        }
+
+        if ($request->end_date) {
+            $query->whereDate('date', '<=', $request->end_date);
+        }
+
+        $incomes = $query->get();*/
+
         $incomes = Income::with('category')->latest()->get();
         //$incomes = Income::with('category')->latest()->paginate(3);
 
@@ -31,20 +43,7 @@ class IncomeController extends Controller
      */
     public function store(Request $request) {
 
-        $query = Income::query();
-
-        if ($request->start_date) {
-            $query->whereDate('date', '>=', $request->start_date);
-        }
-
-        if ($request->end_date) {
-            $query->whereDate('date', '<=', $request->end_date);
-        }
-
-        $incomes = $query->get();
-
         Income::create($request->all());
-
         return redirect()->route('incomes.index')->with('success', 'Receita cadastrada.');
     }
 

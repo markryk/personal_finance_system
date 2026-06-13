@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <h2 class="mb-4"> Dashboard Financeiro </h2>
 
     <div class="row">
@@ -32,7 +31,26 @@
         </div>
     </div>
 
-    <div class="row">
+    <div id="app">
+        <dashboard-chart
+            :labels='@json(["Receitas", "Despesas"])'
+            :values='@json([$totalIncome, $totalExpense])'>
+        </dashboard-chart>
+
+        <expense-chart
+            :labels='@json($expensesByCategory->pluck("name"))'
+            :values='@json($expensesByCategory->pluck("total"))'
+        >
+        </expense-chart>
+
+        <goal-chart
+            :current="{{ $goal['current'] }}"
+            :target="{{ $goal['target'] }}"
+        >
+        </goal-chart>
+    </div>
+
+    <!--<div class="row">
         <div class="col-md-4">
             <div class="card mt-4">
                 <div class="card-header"> Receitas x Despesas </div>
@@ -51,7 +69,7 @@
                     <canvas id="expenseCategoryChart"> </canvas>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!--<div class="col-md-4">
             <div class="card mt-4">
@@ -63,12 +81,7 @@
             </div>
         </div>-->
 
-        <!--<div id="app">
-            <dashboard-chart
-                :labels='@json(["Receitas", "Despesas"])'
-                :values='@json([$totalIncome, $totalExpense])'>
-            </dashboard-chart>
-        </div>-->
+        
     <!--</div>-->
 
     @push('scripts')

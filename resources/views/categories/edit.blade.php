@@ -6,23 +6,16 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label> Nome </label>
-            <input type="text" name="name" class="form-control" value="{{ $category->name }}">
-        </div>
+        <x-input name="name" label="Nome" class="form-control" value="{{ $category->name }}"/>
 
-        <div class="mb-3">
-            <label> Tipo </label>
-            <select name="type" class="form-control">
-                <option value="income" @selected($category->type == 'income')> Receita </option>
-                <option value="expense" @selected($category->type == 'expense')> Despesa </option>
-            </select>
-        </div>
+        <x-select 
+            name="type"
+            label="Tipo"
+            :options="['income'=>'Receita', 'expense'=>'Despesa']"
+            :selected="$category->type"
+        />
 
-        <div class="mb-3">
-            <label> Cor </label>
-            <input type="color" name="color" class="form-control form-control-color" value="{{ $category->color }}">
-        </div>
+        <x-input type="color" name="color" label="Cor" class="form-control-color" value="{{ $category->color }}"/>
 
         <button class="btn btn-success"> Atualizar </button>
     </form>
