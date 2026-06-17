@@ -20,9 +20,8 @@ class CategoryController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() {
-        /*$categories = Category::latest()->get();
+        //$categories = Category::latest()->get();
 
-        return view('categories.index', compact('categories'));*/
         return view('categories.create');
     }
 

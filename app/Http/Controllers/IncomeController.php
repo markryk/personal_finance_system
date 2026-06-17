@@ -12,6 +12,7 @@ class IncomeController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        //Filtros
         /*$query = Income::query();
 
         if ($request->start_date) {
@@ -34,8 +35,9 @@ class IncomeController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() {
+        $income = new Income();
         $categories = Category::where('type', 'income')->get();
-        return view('incomes.create', compact('categories'));
+        return view('incomes.create', compact('income', 'categories'));
     }
 
     /**

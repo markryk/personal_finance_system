@@ -12,8 +12,8 @@ class ExpenseController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        //$expenses = Expense::with('category')->latest()->paginate(3);
-        $expenses = Expense::with('category')->latest()->get();
+        $expenses = Expense::with('category')->latest()->paginate(3);
+        //$expenses = Expense::with('category')->latest()->get();
 
         return view('expenses.index', compact('expenses'));
     }
@@ -22,8 +22,9 @@ class ExpenseController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() {
+        $expense = new Expense();
         $categories = Category::where('type', 'expense')->get();
-        return view('expenses.create', compact('categories'));
+        return view('expenses.create', compact('expense', 'categories'));
     }
 
     /**
@@ -31,7 +32,7 @@ class ExpenseController extends Controller
      */
     public function store(Request $request) {
         Expense::create($request->all());
-        return redirect()->route('expenses.index');
+        return redirect()->route('expenses.index')->with('success', 'Despesa cadastrada.');
     }
 
     /**

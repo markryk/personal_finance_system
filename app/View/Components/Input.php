@@ -8,15 +8,15 @@
     class Input extends Component {
         public string $name;
         public string $label;
+        public string $class;
         public string $type;
         public mixed $value;
         public string $placeholder;
-        public string $class;
         public string $step;
 
         //Váriavel $class já vem com 'form-control', mas pode ter outras características
         //Váriável $step, pra quando o input for número decimal   
-        public function __construct($name, $label, $class, $type = 'text', $value=NULL, $placeholder='', $step="NULL") {
+        public function __construct($name, $label, $class="NULL", $type = 'text', $value=NULL, $placeholder='', $step="NULL") {
             $this->name = $name;
             $this->label = $label;
             $this->class = $class;
