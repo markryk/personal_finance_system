@@ -50,7 +50,7 @@
         </goal-chart>
     </div>
 
-    <!--<div class="row">
+    <div class="row">
         <div class="col-md-4">
             <div class="card mt-4">
                 <div class="card-header"> Receitas x Despesas </div>
@@ -69,7 +69,7 @@
                     <canvas id="expenseCategoryChart"> </canvas>
                 </div>
             </div>
-        </div>-->
+        </div>
 
         <!--<div class="col-md-4">
             <div class="card mt-4">
@@ -82,7 +82,7 @@
         </div>-->
 
         
-    <!--</div>-->
+    </div>
 
     @push('scripts')
         <script>

@@ -24,7 +24,15 @@
             ->groupBy('categories.name')
             ->get();
 
-            return view('dashboard.index', compact('totalIncome', 'totalExpense', 'balance', 'expensesByCategory', 'incomesByCategory', 'goal'));
+            return view('dashboard.index', compact(
+                'totalIncome', 
+                'totalExpense', 
+                'balance', 
+                'expensesByCategory', 
+                'incomesByCategory', 
+                'goal'
+                )
+            );
         }
     }
 ?>
