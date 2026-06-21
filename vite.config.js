@@ -18,9 +18,16 @@ export default defineConfig({
         tailwindcss(),
         vue()
     ],
+    resolve: {
+        alias: {
+            'vue': 'vue/dist/vue.esm-bundler.js'
+        }
+    }, 
     server: {
-        watch: {
-            ignored: ['**/storage/framework/views/**'],
+        host: 'localhost',
+        port: 5173, 
+        hmr: {
+            host: 'localhost'
         },
     },
 });

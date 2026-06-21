@@ -8,7 +8,23 @@
 
     class DashboardController extends Controller {
         public function index(FinanceService $financeService) {
-            $totalIncome = $financeService->totalIncome();
+
+            $totalIncome = Income::sum('amount');
+            $totalExpense = Expense::sum('amount');
+
+            $categories = Expense::selectRaw('categories.name, SUM(expenses.amount) total')
+            ->join('categories', 'categories.id', '=', 'expenses.category_id')
+            ->groupBy('categories.name')
+            ->get();
+
+            return view('dashboard.index', [
+                'totalIncome'=> $totalIncome,
+                'totalExpense'=> $totalExpense,
+                'categoryLabels'=> $categories->pluck('name'),
+                'categoryValues'=> $categories->pluck('total')
+            ]);
+
+            /*$totalIncome = $financeService->totalIncome();
             $totalExpense = $financeService->totalExpense();
             $balance = $financeService->balance();
 
@@ -32,7 +48,7 @@
                 'incomesByCategory', 
                 'goal'
                 )
-            );
+            );*/
         }
     }
 ?>
