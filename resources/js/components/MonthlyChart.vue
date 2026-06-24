@@ -3,27 +3,43 @@
 </template>
 
 <script setup>
+
+    import { ref, onMounted, watch } from 'vue';
+    import Chart from 'chart.js/auto';
+
+    const canvas = ref(null);
     const props = defineProps({
+        labels: Array,
+        values: Array
+    });
+
+    let chart;
+
+    /*const props = defineProps({
         labels: Array,
         incomes: Array,
         expenses: Array
-    });
+    });*/
 
-    onMounted(() => {
-        new Chart(chart.value, {
+    function render() {
+        if(chart) {
+            chart.destroy();
+        }
+
+        chart = new Chart(canvas.value, {
             type: 'line',
             data: {
                 labels: props.labels,
 
                 datasets: [{
-                        label: 'Receitas',
-                        data: props.incomes
-                    }, {
-                        label: 'Despesas',
-                        data: props.expenses
-                    }
-                ]
+                    label: 'Fluxo mensal',
+                    data: props.values
+                }]
             }
         });
-    });
+    }
+
+    onMounted(render);
+
+    watch(() => props.values, render, {deep:true});
 </script>

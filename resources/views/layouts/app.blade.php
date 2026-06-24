@@ -17,6 +17,7 @@
                     <a class="nav-link" href="{{ route('categories.index') }}"> Categorias </a>
                     <a class="nav-link" href="{{ route('incomes.index') }}"> Receitas </a>
                     <a class="nav-link" href="{{ route('expenses.index') }}"> Despesas </a>
+                    <a class="nav-link" href="{{ route('goals.index') }}"> Metas Financeiras </a>
                 </div>
             </div>
         </nav>

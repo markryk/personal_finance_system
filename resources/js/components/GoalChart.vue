@@ -1,23 +1,25 @@
 <template>
-    <canvas ref="chart"></canvas>
+    <canvas ref="canvas"></canvas>
 </template>
 
 <script setup>
-    const props = defineProps({
-        current: Number,
-        target: Number
+    import { ref, onMounted } from 'vue';
+    import Chart from 'chart.js/auto';
+
+    const canvas = ref(null);
+
+    const props = defineProps({ 
+        progress: Number 
     });
 
     onMounted(() => {
-        const remaining = props.target - props.current;
-
-        new Chart(chart.value, {
-            type: 'doughnut',
+        new Chart(canvas.value, {
+            type:'doughnut',
             data: {
-                labels: ['Concluído', 'Restante'],
-
+                labels:["Concluído", "Restante"],
+                
                 datasets: [{
-                    data: [props.current, remaining]
+                    data: [props.progress, 100-props.progress]
                 }]
             }
         });

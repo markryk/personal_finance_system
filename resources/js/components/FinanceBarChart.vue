@@ -2,9 +2,8 @@
     <canvas ref="canvas"></canvas>
 </template>
 
-
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
     import Chart from 'chart.js/auto';
 
     const canvas = ref(null);
@@ -15,9 +14,12 @@
 
     let chart;
 
-    onMounted(()=>{
-        chart = new Chart(canvas.value, {
+    function render() {
+        if(chart) {
+            chart.destroy();
+        }
 
+        chart = new Chart(canvas.value, {
             type: 'bar',
             data: {
                 labels: [ 'Receitas', 'Despesas' ],
@@ -28,5 +30,10 @@
                 }]
             }
         })
-    });
+    }
+
+    onMounted(render);
+
+    //Função que atualiza automaticamente os gráficos
+    watch(() => [props.income, props.expense], render);
 </script>

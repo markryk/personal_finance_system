@@ -23,12 +23,6 @@
                 <button class="btn btn-success" @click="sendFilter"> Filtrar </button>
             </div>
         </div>
-        <!--<div>
-            <input type="date" v-model="start"/>
-            <input type="date" v-model="end"/>
-
-            <button @click="filter"> Filtrar </button>
-        </div>-->
     </div>
 </template>
 
@@ -97,7 +91,6 @@
     }
 
     async function loadDashboard(filters) {
-
         let response = await fetch('/dashboard/data?' + new URLSearchParams(filters));
         let data = await response.json();
 
