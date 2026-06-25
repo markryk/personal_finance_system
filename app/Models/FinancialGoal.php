@@ -10,5 +10,9 @@
             'current_amount',
             'deadline'
         ];
+
+        public function incomes() {
+            return $this->hasMany(Income::class, 'goal_id');
+        }
     }
 ?>

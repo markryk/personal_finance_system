@@ -9,6 +9,11 @@
                 <div class="progress-bar" :style="{ width: goal.progress+'%' }"> {{ goal.progress }} % </div>
             </div>
 
+            <h4> Falta: R$ {{ goal.remaining }} </h4>
+            <h4 v-if="goal.forecast"> Previsão: {{ goal.forecast }} meses </h4>
+            <h4 v-if="goal.delay < 0"> Você está atrasado {{ Math.abs(goal.delay) }}% </h4>
+            <h4 v-else> Você está adiantado </h4>
+
         </div>
     </div>
 </template>

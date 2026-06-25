@@ -16,7 +16,7 @@
         new Chart(canvas.value, {
             type:'doughnut',
             data: {
-                labels:["Concluído", "Restante"],
+                labels:["Concluído", "Falta"],
                 
                 datasets: [{
                     data: [props.progress, 100-props.progress]

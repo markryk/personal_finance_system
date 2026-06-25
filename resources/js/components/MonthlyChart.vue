@@ -1,32 +1,32 @@
 <template>
-    <canvas ref="chart"></canvas>
+    <canvas ref="canvas"></canvas>
 </template>
 
 <script setup>
-
     import { ref, onMounted, watch } from 'vue';
     import Chart from 'chart.js/auto';
 
     const canvas = ref(null);
     const props = defineProps({
-        labels: Array,
-        values: Array
+        labels: {
+            type: Array,
+            default: () => []
+        },
+
+        values: {
+            type: Array,
+            default: () => []
+        }
     });
 
-    let chart;
+    let chartInstance = null;
 
-    /*const props = defineProps({
-        labels: Array,
-        incomes: Array,
-        expenses: Array
-    });*/
-
-    function render() {
-        if(chart) {
-            chart.destroy();
+    function renderChart() {
+        if(chartInstance) {
+            chartInstance.destroy();
         }
 
-        chart = new Chart(canvas.value, {
+        chartInstance = new Chart(canvas.value, {
             type: 'line',
             data: {
                 labels: props.labels,
@@ -39,7 +39,13 @@
         });
     }
 
-    onMounted(render);
+    onMounted(() => {
+        renderChart();
+    });
 
-    watch(() => props.values, render, {deep:true});
+    watch (
+        () => props.values, 
+        () => { renderChart(); },
+        { deep:true }
+    );
 </script>

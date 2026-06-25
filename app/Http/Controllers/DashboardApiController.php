@@ -3,19 +3,24 @@
 
     use App\Models\Income;
     use App\Models\Expense;
+use App\Models\FinancialGoal;
+use App\Services\GoalService;
     use Illuminate\Http\Request;
 
     class DashboardApiController {
-        public function data(Request $request) {
+        public function data(Request $request, GoalService $goalService) {
 
             $request->validate([
                 'start'=>'required|date',
                 'end'=>'required|date'
             ]);
 
-            //Totais
+            //Totais (Receitas e Despesas)
             $income = Income::whereBetween('date', [$request->start, $request->end])->sum('amount');
             $expense = Expense::whereBetween('date', [$request->start, $request->end])->sum('amount');
+
+            //Total guardado para as metas
+            $savedForGoals = Income::whereNotNull('goalId')->whereBetween('date', [$request->start, $request->end])->sum('amount');
 
             //Gastos por categoria
             $categories = Expense::selectRaw('categories.name, SUM(expenses.amount) total')
@@ -31,10 +36,21 @@
             ->orderBy('month')
             ->get();
 
+            //Metas
+            $goals = FinancialGoal::all()->map(function($goal) use ($goalService) {
+                return [
+                    'id'=>$goal->id,
+                    'name'=>$goal->name,
+                    'progress'=> $goalService->progress($goal),
+                    'target'=> $goal->target_amount,
+                    'current'=> $goal->current_amount
+                ];
+            });
+
             return response()->json([
-                "income"=>$income,
-                "expense"=>$expense,
-                "balance"=>$income - $expense, 
+                "income" => $income,
+                "expense" => $expense,
+                "balance" => $income - $expense, 
 
                 "categories" => [
                     "labels" => $categories->pluck('name'),
@@ -44,7 +60,8 @@
                 "monthly" => [
                     "labels" => $monthly->pluck('month'),
                     "values" => $monthly->pluck('total')
-                ]
+                ], 
+                "goals" => $goals
                 
             ]);
         }

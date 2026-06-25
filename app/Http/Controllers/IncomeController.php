@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\FinancialGoal;
 use App\Models\Income;
 use Illuminate\Http\Request;
 
-class IncomeController extends Controller
-{
+class IncomeController extends Controller {
     /**
      * Display a listing of the resource.
      */
@@ -45,8 +45,22 @@ class IncomeController extends Controller
      */
     public function store(Request $request) {
 
-        Income::create($request->all());
-        return redirect()->route('incomes.index')->with('success', 'Receita cadastrada.');
+        //Income::create($request->all());
+        $income = Income::create([
+            'description'=>$request->description,
+            'amount'=>$request->amount,
+            'goal_id'=>$request->goal_id,
+            'date'=>$request->date, 
+            'category_id'=>$request->category_id
+        ]);
+
+        if($income->goal_id) {
+            $goal = FinancialGoal::find($income->goal_id);
+            $goal->increment('current_amount', $income->amount);
+        }
+
+        return response()->json($income);
+        //return redirect()->route('incomes.index')->with('success', 'Receita cadastrada.');
     }
 
     /**
